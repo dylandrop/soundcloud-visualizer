@@ -1,0 +1,10 @@
+#visualizer {
+  background-color: black;
+  position: absolute; 
+  top: 0px;
+  left: 0px;
+}
+
+body {
+  background-color: black;
+}
