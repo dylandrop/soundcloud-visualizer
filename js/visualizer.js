@@ -19,12 +19,18 @@ var CenterIcon = (function() {
 })();
 
 var VisualizerDot = (function() {
-   var radius = 5;
-   var color;
-   var xPos; var yPos; var mass=2;
+   var radius = 5; var mass=2;
+   var xPos; var yPos; var color;
 
    function VisualizerDot(x,y,c) {
       xPos = x; yPos = y; color = c;
+   }
+
+   VisualizerDot.prototype.draw = function(context) {
+      context.beginPath()
+      context.arc(xPos, yPos, radius, 0, 2 * Math.PI, false);
+      context.fillStyle = color;
+      context.fill();
    }
 })();
 
