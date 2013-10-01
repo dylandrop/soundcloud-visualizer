@@ -111,3 +111,15 @@ var dots = new Array();
 initializeDotsAboutRadius(radius, 100, dots);
 
 setInterval(draw,1000/60);
+
+//http://stackoverflow.com/questions/13455956/setup-web-audio-api-source-node-from-soundcloud
+var ctx = new webkitAudioContext(),
+    audio = new Audio(),
+    source,
+    url = 'http://api.soundcloud.com/tracks/111453161/stream' +
+          '?client_id=9dbc638d0d3dc69a9500c85a6097e786';
+
+audio.src = url;
+source = ctx.createMediaElementSource(audio);
+source.connect(ctx.destination);
+source.mediaElement.play();
