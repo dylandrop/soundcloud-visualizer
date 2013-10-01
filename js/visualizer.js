@@ -96,8 +96,19 @@ function determineIfBounceOccurred() {
       sumOfLowFreqs += freqByteData[i];
    }
    if(sumOfLowFreqs / 50 > 200) {
-      console.log("IT'S HAPPENING!");
+      debounceImpulse();
    }
+}
+
+function debounce(fn, delay) {
+   var timer = null;
+   return function () {
+      var cont = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+         fn.apply(cont, args);
+      }, delay);
+   };
 }
 
 function impulse() {
@@ -106,6 +117,8 @@ function impulse() {
       dots[i].setImpulse(size);
    }
 }
+
+var debounceImpulse = debounce(impulse, 300);
 
 var canvas = document.getElementById("visualizer");
 var context = canvas.getContext('2d');
