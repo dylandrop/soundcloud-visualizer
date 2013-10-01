@@ -15,6 +15,11 @@ var CenterIcon = (function() {
       context.fillStyle = 'green';
       context.fill();
    }
+
+   CenterIcon.prototype.getRadius = function() {
+        return radius;
+   };
+
    return CenterIcon;
 })();
 
@@ -27,7 +32,7 @@ var VisualizerDot = (function() {
    }
 
    VisualizerDot.prototype.draw = function(context) {
-      context.beginPath()
+      context.beginPath();
       context.arc(xPos, yPos, radius, 0, 2 * Math.PI, false);
       context.fillStyle = color;
       context.fill();
