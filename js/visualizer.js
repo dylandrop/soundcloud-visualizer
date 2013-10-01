@@ -24,36 +24,33 @@ var CenterIcon = (function() {
 })();
 
 var VisualizerDot = (function() {
-   var radius;
-   var xPos; var yPos; var color;
-   var minXPos; var minYPos;
 
    function VisualizerDot(x, y, c) {
-      xPos = x; yPos = y; 
-      color = c; radius = 5;
+      this.xPos = x; this.yPos = y; 
+      this.color = c; this.radius = 5;
    }
 
    VisualizerDot.prototype.setMinX = function(x) {
-      minXPos = x;
+      this.minXPos = x;
    }
 
    VisualizerDot.prototype.setMinY = function(y) {
-      minYPos = y;
+      this.minYPos = y;
    }
 
    VisualizerDot.prototype.updateX = function() {
-      xPos = xPos + 1;
+      this.xPos = this.xPos + 1;
    }
 
    VisualizerDot.prototype.updateY = function() {
-      yPos = yPos + 1;
+      this.yPos = this.yPos + 1;
    }
 
    VisualizerDot.prototype.draw = function() {
       context.beginPath();
       this.updateX(); this.updateY();
-      context.arc(xPos, yPos, radius, 0, 2 * Math.PI, false);
-      context.fillStyle = color;
+      context.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI, false);
+      context.fillStyle = this.color;
       context.fill();
    }
 
@@ -66,12 +63,14 @@ function initializeDotsAboutRadius(radius, offset, dots) {
       dots.push(new VisualizerDot(Math.cos(angle) * (radius + offset + 5) + centerX, Math.sin(angle) * (radius + offset + 5) + centerY, "#FFFFFF"));
       dots[i-1].setMinX(Math.cos(angle) * (radius + 5) + centerX);
       dots[i-1].setMinY(Math.sin(angle) * (radius + 5) + centerX);
-      dots[i-1].draw(context);
+      dots[i-1].draw();
    }
 }
 
 function draw() {
-
+   for(var i = 0; i < dots.length; i++) {
+      dots[i].draw();
+   }
 }
 
 var canvas = document.getElementById("visualizer");
@@ -89,5 +88,5 @@ artist.draw(context);
 var dots = new Array();
 initializeDotsAboutRadius(radius, 70, dots);
 
-setInterval(draw,10);
+setInterval(draw,1000);
 
