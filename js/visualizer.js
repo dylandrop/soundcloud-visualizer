@@ -44,7 +44,11 @@ var VisualizerDot = (function() {
 })();
 
 function initializeDotsAboutRadius(radius, dots) {
-
+   for(var i = 1; i <= 45; i++) {
+      angle = 2 * Math.PI * i/45;
+      dots.push(new VisualizerDot(Math.cos(angle) * (radius + 5) + centerX, Math.sin(angle) * (radius + 5) + centerY, "#FFFFFF"));
+      dots[i-1].draw(context);
+   }
 }
 
 var canvas = document.getElementById("visualizer");
@@ -60,10 +64,5 @@ var artist = new CenterIcon(centerX, centerY, radius);
 artist.draw(context);
 
 var dots = new Array();
-for(var i = 1; i <= 45; i++) {
-   angle = 2 * Math.PI * i/45;
-   dots.push(new VisualizerDot(Math.cos(angle) * (radius + 5) + centerX, Math.sin(angle) * (radius + 5) + centerY, "#FFFFFF"));
-   dots[i-1].draw(context);
-}
-
+initializeDotsAboutRadius(radius + 70, dots);
 
