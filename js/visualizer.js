@@ -47,8 +47,8 @@ var VisualizerDot = (function() {
       }
    }
 
-   VisualizerDot.prototype.setImpulse = function() {
-      
+   VisualizerDot.prototype.setImpulse = function(size) {
+      this.vel += size;
    }
 
    VisualizerDot.prototype.draw = function() {
@@ -70,11 +70,11 @@ function getRandomInt (min, max) {
 
 function initializeDotsAboutRadius(radius, offset, dots) {
    var numDots = 85;
-   var possibleColors = new Array("#FFFFFF", "#E6E6E6", "#EEEEEE", "#aaaaaa", "#F6F6F6")
+   var possibleColors = new Array("#E6E6E6", "#EEEEEE", "#aaaaaa", "#F6F6F6")
    for(var i = 1; i <= numDots; i++) {
       angle = 2 * Math.PI * i/numDots;
-      var rad = getRandomInt(4, 8);
-      dots.push(new VisualizerDot(Math.cos(angle) * (radius + offset + rad) + centerX, Math.sin(angle) * (radius + offset + rad) + centerY, possibleColors[rad-4], rad));
+      var rad = getRandomInt(5, 8);
+      dots.push(new VisualizerDot(Math.cos(angle) * (radius + offset + rad) + centerX, Math.sin(angle) * (radius + offset + rad) + centerY, possibleColors[rad-5], rad));
       dots[i-1].setAngle(angle);
       dots[i-1].draw();
    }
@@ -85,6 +85,13 @@ function draw() {
    artist.draw();
    for(var i = 0; i < dots.length; i++) {
       dots[i].draw();
+   }
+}
+
+function impulse() {
+   size = 4;
+   for(var i = 0; i < dots.length; i++) {
+      dots[i].setImpulse(size);
    }
 }
 
@@ -104,4 +111,3 @@ var dots = new Array();
 initializeDotsAboutRadius(radius, 100, dots);
 
 setInterval(draw,1000/60);
-
