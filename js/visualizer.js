@@ -88,6 +88,18 @@ function draw() {
    }
 }
 
+function determineIfBounceOccurred() {
+   var freqByteData = new Uint8Array(analyser.frequencyBinCount);
+   analyser.getByteFrequencyData(freqByteData);
+   var sumOfLowFreqs = 0;
+   for(var i = 0; i < 50; i++) {
+      sumOfLowFreqs += freqByteData[0];
+   }
+   if(sumOfLowFreqs > 12500) {
+      console.log("IT'S HAPPENING!");
+   }
+}
+
 function impulse() {
    size = 4;
    for(var i = 0; i < dots.length; i++) {
@@ -110,8 +122,6 @@ artist.draw(context);
 var dots = new Array();
 initializeDotsAboutRadius(radius, 100, dots);
 
-setInterval(draw,1000/60);
-
 //http://stackoverflow.com/questions/13455956/setup-web-audio-api-source-node-from-soundcloud
 var ctx = new webkitAudioContext(),
     audio = new Audio(),
@@ -121,5 +131,10 @@ var ctx = new webkitAudioContext(),
 
 audio.src = url;
 source = ctx.createMediaElementSource(audio);
-source.connect(ctx.destination);
+var analyser = ctx.createAnalyser();
+source.connect(analyser);
+analyser.connect(ctx.destination);
 source.mediaElement.play();
+
+setInterval(draw,1000/60);
+setInterval(determineIfBounceOccurred, 10);
