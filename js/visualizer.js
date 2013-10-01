@@ -101,13 +101,16 @@ function determineIfBounceOccurred() {
 }
 
 function debounce(fn, delay) {
-   var timer = null;
+   var lastCalled;
    return function () {
-      var cont = this, args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-         fn.apply(cont, args);
-      }, delay);
+      var seconds = new Date().getTime();
+      if (lastCalled === undefined) {
+         fn();
+         lastCalled = new Date().getTime();
+      } else if (seconds - lastCalled > delay) {
+         fn();
+         lastCalled = seconds;
+      }
    };
 }
 
