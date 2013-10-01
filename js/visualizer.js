@@ -22,9 +22,9 @@ var CenterIcon = (function() {
 
 var VisualizerDot = (function() {
 
-   function VisualizerDot(x, y, c) {
+   function VisualizerDot(x, y, c, rad) {
       this.xPos = x; this.yPos = y; 
-      this.color = c; this.radius = 5;
+      this.color = c; this.radius = rad;
       this.vel = 3;
    }
 
@@ -43,8 +43,12 @@ var VisualizerDot = (function() {
 
    VisualizerDot.prototype.bounceBack = function(otherObjX, otherObjY, otherObjRad) {
       if( Math.sqrt(Math.pow(otherObjY - this.yPos, 2) + Math.pow(otherObjX - this.xPos,2)) < (otherObjRad+this.radius)) {
-         this.vel = -1 * this.vel * 0.8;//bouncefactor == 0.9
+         this.vel = -1 * this.vel * ((13-this.radius) / 10);//bouncefactor
       }
+   }
+
+   VisualizerDot.prototype.setImpulse = function() {
+      
    }
 
    VisualizerDot.prototype.draw = function() {
@@ -59,11 +63,18 @@ var VisualizerDot = (function() {
    return VisualizerDot;
 })();
 
+// See http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
+function getRandomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function initializeDotsAboutRadius(radius, offset, dots) {
-   var numDots = 45;
+   var numDots = 85;
+   var possibleColors = new Array("#FFFFFF", "#E6E6E6", "#EEEEEE", "#aaaaaa", "#F6F6F6")
    for(var i = 1; i <= numDots; i++) {
       angle = 2 * Math.PI * i/numDots;
-      dots.push(new VisualizerDot(Math.cos(angle) * (radius + offset + 5) + centerX, Math.sin(angle) * (radius + offset + 5) + centerY, "#FFFFFF"));
+      var rad = getRandomInt(4, 8);
+      dots.push(new VisualizerDot(Math.cos(angle) * (radius + offset + rad) + centerX, Math.sin(angle) * (radius + offset + rad) + centerY, possibleColors[rad-4], rad));
       dots[i-1].setAngle(angle);
       dots[i-1].draw();
    }
