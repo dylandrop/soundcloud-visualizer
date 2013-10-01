@@ -92,10 +92,10 @@ function determineIfBounceOccurred() {
    var freqByteData = new Uint8Array(analyser.frequencyBinCount);
    analyser.getByteFrequencyData(freqByteData);
    var sumOfLowFreqs = 0;
-   for(var i = 0; i < 50; i++) {
-      sumOfLowFreqs += freqByteData[0];
+   for(var i = 150; i < 200; i++) {
+      sumOfLowFreqs += freqByteData[i];
    }
-   if(sumOfLowFreqs > 12500) {
+   if(sumOfLowFreqs / 50 > 200) {
       console.log("IT'S HAPPENING!");
    }
 }
