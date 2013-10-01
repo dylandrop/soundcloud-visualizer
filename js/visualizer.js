@@ -1,16 +1,33 @@
 var CenterIcon = (function() {
 
-   function CenterIcon(x, y, rad) {
+   function CenterIcon(x, y, image, rad) {
       this.xPos = x;
       this.yPos = y;
+      this.imageUrl = image;
       this.radius = rad;
    }
 
    CenterIcon.prototype.draw = function() {
       context.beginPath();
-      context.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI, false);
-      context.fillStyle = 'green';
-      context.fill();
+      var thumbImg = document.createElement('img');
+      thumbImg.src = this.imageUrl;
+      // context.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI, false);
+      // context.fillStyle = 'green';
+      // context.fill();
+
+      context.save();
+      context.beginPath();
+      context.arc(this.xPos, this.yPos, this.radius, 0, Math.PI * 2, false);
+      context.closePath();
+      context.clip();
+
+      context.drawImage(thumbImg, this.xPos-this.radius, this.yPos-this.radius, this.radius*2, this.radius*2);
+
+      context.beginPath();
+      context.arc(0, 0, this.radius, 0, Math.PI * 2, false);
+      context.clip();
+      context.closePath();
+      context.restore();
    }
 
    CenterIcon.prototype.getRadius = function() {
@@ -132,7 +149,7 @@ var centerX = canvas.width / 2;
 var centerY = canvas.height / 2;
 var radius = 70;
 
-var artist = new CenterIcon(centerX, centerY, radius);
+var artist = new CenterIcon(centerX, centerY, "http://i1.sndcdn.com/avatars-000052305894-adq6yp-large.jpg?3eddc42",radius);
 artist.draw(context);
 
 var dots = new Array();
