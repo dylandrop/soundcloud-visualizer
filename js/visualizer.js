@@ -11,9 +11,6 @@ var CenterIcon = (function() {
       context.beginPath();
       var thumbImg = document.createElement('img');
       thumbImg.src = this.imageUrl;
-      // context.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI, false);
-      // context.fillStyle = 'green';
-      // context.fill();
 
       context.save();
       context.beginPath();
@@ -86,7 +83,7 @@ function getRandomInt (min, max) {
 }
 
 function initializeDotsAboutRadius(radius, offset, dots) {
-   var numDots = 85;
+   var numDots = 155;
    var possibleColors = new Array("#E6E6E6", "#EEEEEE", "#aaaaaa", "#F6F6F6")
    for(var i = 1; i <= numDots; i++) {
       angle = 2 * Math.PI * i/numDots;
@@ -109,11 +106,16 @@ function determineIfBounceOccurred() {
    var freqByteData = new Uint8Array(analyser.frequencyBinCount);
    analyser.getByteFrequencyData(freqByteData);
    var sumOfLowFreqs = 0;
-   for(var i = 150; i < 200; i++) {
+   var sumOfHighFreqs = 0;
+   for(var i = 130; i < 180; i++) {
       sumOfLowFreqs += freqByteData[i];
+      sumOfHighFreqs += freqByteData[i+700];
    }
    if(sumOfLowFreqs / 50 > 200) {
       debounceImpulse();
+   }
+   else if(sumOfLowFreqs / 50 > 30) {
+      debounceImpulse2();
    }
 }
 
@@ -138,7 +140,15 @@ function impulse() {
    }
 }
 
+function impulse2() {
+   size = 1;
+   for(var i = 0; i < dots.length; i++) {
+      dots[i].setImpulse(size);
+   }
+}
+
 var debounceImpulse = debounce(impulse, 300);
+var debounceImpulse2 = debounce(impulse2, 200);
 
 var canvas = document.getElementById("visualizer");
 var context = canvas.getContext('2d');
