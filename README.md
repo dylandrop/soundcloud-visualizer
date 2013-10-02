@@ -9,4 +9,5 @@ This project is written with HTML5 Canvas and Webkit Audio APIs.
 
 I'm considering adding an option to put different tracks in here, as well as improvements for the beat detection system and other improvements. Feel free to branch!
 
-Made by [Dylan Drop](http://dylandrop.com).
+Made by [Dylan Drop](http://dylandrop.com)
+
