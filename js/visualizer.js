@@ -84,11 +84,11 @@ function getRandomInt (min, max) {
 
 function initializeDotsAboutRadius(radius, offset, dots) {
    var numDots = 155;
-   var possibleColors = new Array("#E6E6E6", "#EEEEEE", "#aaaaaa", "#F6F6F6")
+   var possibleColors = new Array("#FFAB00", "#ab2b52", "#fb000d", "#FDD540")
    for(var i = 1; i <= numDots; i++) {
       angle = 2 * Math.PI * i/numDots;
       var rad = getRandomInt(5, 8);
-      dots.push(new VisualizerDot(Math.cos(angle) * (radius + offset + rad) + centerX, Math.sin(angle) * (radius + offset + rad) + centerY, possibleColors[rad-5], rad));
+      dots.push(new VisualizerDot(Math.cos(angle) * (radius + offset + rad) + centerX, Math.sin(angle) * (radius + offset + rad) + centerY, possibleColors[getRandomInt(0, 3)], rad));
       dots[i-1].setAngle(angle);
       dots[i-1].draw();
    }
@@ -141,7 +141,7 @@ function impulse() {
 }
 
 function impulse2() {
-   size = 1;
+   size = 1.5;
    for(var i = 0; i < dots.length; i++) {
       dots[i].setImpulse(size);
    }
